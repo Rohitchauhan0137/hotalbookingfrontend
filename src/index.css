@@ -11,3 +11,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navbar {
+  background-color: black !important;
+}
+
+.nav-link, .navbar-brand {
+  color: white !important;
+}
+
+.navbar-nav {
+  margin-left: auto;
+}
+
+.loged-user-name, .dropdown-toggle {
+  background-color: black !important;
+  margin-left: auto;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.navbar-toggler-icon, .navbar-toggler {
+  color: white !important;
+}

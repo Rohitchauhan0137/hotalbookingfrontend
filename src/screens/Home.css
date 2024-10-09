@@ -1,0 +1,9 @@
+.home-header {
+    width: 70vw;
+    margin: 20px auto;
+}
+
+.header-body {
+    display: flex;
+    gap: 0px;
+}

@@ -1,0 +1,40 @@
+.card-body {
+    display: flex;
+    gap: 20px;
+}
+
+.rooms-card {
+    width: 70vw;
+    margin: 20px auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.modal-img {
+    height: 350px;
+    width: 600px;
+    border-radius: 5px;
+}
+
+.smallimg {
+    height: 200px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+.room-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(101, 97, 97);
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.card-button {
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+}

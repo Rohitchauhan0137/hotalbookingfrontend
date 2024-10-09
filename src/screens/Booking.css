@@ -1,0 +1,47 @@
+.book-rooms-card {
+    display: flex;
+    width: 85vw;
+    margin: 20px auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.book-card-body {
+    display: flex;
+    justify-content: space-between;
+    gap: 120px;
+}
+
+.book-card-text {
+    width: 100%;
+}
+
+.booking-slids {
+    width: 400px;
+}
+
+.book-carousel-img {
+    height: 300px;
+    width: 400px;
+    border-radius: 8px;
+}
+
+.book-card-left-text {
+    padding: 20px 0px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.booking-details {
+    font-size: 18px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.booking-details-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.booking-payment{
+    margin-top: 10px;
+}
