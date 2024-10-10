@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/esm/Button';
 import moment from 'moment';
 import toast, { Toaster } from 'react-hot-toast';
 import StripeCheckout from 'react-stripe-checkout';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import './Booking.css'
@@ -102,18 +104,29 @@ const Booking = () => {
         }
 
         try {
+            setLoading(true)
             const result = await axios.post('/api/bookings/bookRoom', bookingDetails)
             if (result) {
-                toast.success('Room Booked successfully', { duration: 2000 })
+                setLoading(false)
+                Swal.fire({
+                    title: "Congratulations",
+                    text: "Your room has been booked successfully",
+                    icon: "success"
+                  });
             }
         } catch (error) {
-            toast.error('Sorry, somthing went wrong, pleae try again', { duration: 2000 })
+            setLoading(false)
+            Swal.fire({
+                title: "Oops...",
+                text: "Sorry, Something went wrong, please try again...",
+                icon: "error"
+              });
         }
     }
 
     return (
         <>
-            {bookingData?.name ?
+            {loading ? <Loading /> : bookingData?.name ?
                 <Card className='book-rooms-card'>
                     <Card.Body className='book-card-body'>
                         <div>
@@ -153,9 +166,7 @@ const Booking = () => {
                         </div>
                     </Card.Body>
                 </Card>
-                : <div>
-                    {loading ? <Loading /> : <Error />}
-                </div>
+                : <Error />
             }
             <Toaster />
         </>

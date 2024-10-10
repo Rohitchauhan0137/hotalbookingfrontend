@@ -21,6 +21,8 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.14.1",
     "react-stripe-checkout": "^2.6.3",
+    "sass": "^1.79.4",
+    "sweetalert2": "^11.14.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
