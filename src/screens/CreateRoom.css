@@ -1,0 +1,12 @@
+.intiger-input, .select {
+    width: 100%;
+}
+
+.add-room-cta {
+    margin-top: 16px;
+}
+
+.add-room-rating {
+    display: flex;
+    gap: 16px;
+}

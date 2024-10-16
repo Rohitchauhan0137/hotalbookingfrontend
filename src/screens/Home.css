@@ -5,5 +5,19 @@
 
 .header-body {
     display: flex;
+    justify-content: space-between;
     gap: 0px;
+}
+
+.date-filter {
+    width: 100%;
+}
+
+.room-search, .room-type-select-box {
+    margin-left: 20px;
+    width: 100%;
+}
+
+.room-type-select {
+    width: 100%;
 }

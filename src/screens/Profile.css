@@ -1,0 +1,26 @@
+.profile-container {
+    margin: 0px 30px;
+}
+
+.profile {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.profile-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-body-item {
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.back-to-home-cta {
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 700;
+}

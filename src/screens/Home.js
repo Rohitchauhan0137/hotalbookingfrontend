@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, Input, Select } from 'antd';
 import 'antd/dist/reset.css'
 import Card from 'react-bootstrap/Card';
 import Rooms from '../components/Rooms';
 import { roomList } from '../redux/slices/room';
 import Loading from '../components/Loading';
-import Error from '../components/Error';
 import './Home.css'
 import moment from 'moment';
 
@@ -18,6 +17,8 @@ const Home = () => {
     const [duplicateRooms, setDuplicateRooms] = useState([]);
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(true);
+    const [roomType, setRoomType] = useState('All');
+    const [serachKey, setSearchKey] = useState('');
     const [error, setError] = useState(true);
     const [dateRange, setDateRange] = useState({
         startDate: null,
@@ -89,14 +90,62 @@ const Home = () => {
         filterRoomByDate(bookingFrom, bookingto)
     }
 
+    const handleSelectChange = (value) => {
+        setRoomType(value)
+        if(value !=='All'){
+            const roomByType = duplicateRooms.filter(room => room.type === value);
+            setRooms([...roomByType])
+        }else{
+            setRooms([...duplicateRooms])
+        }
+    };
+
+    const onInputChange = (e) => {
+        setSearchKey(e.target.value)
+    }
+
+    const filterByKey = (value) => {
+        const filteredRooms = duplicateRooms.filter(room => room.name.toLowerCase().includes(serachKey.toLowerCase()))
+        setRooms([...filteredRooms])
+    }
+
     const renderHeader = () => {
         return (
             <Card className='home-header'>
                 <Card.Body className='header-body'>
-                    <Space direction="vertical" size={12}>
+                    <Space direction="vertical" size={12} className='date-filter'>
                         <RangePicker
                             format='DD-MM-YYYY'
                             onChange={filterByDate}
+                        />
+                    </Space>
+                    <Space direction="vertical" size={12} className='room-search'>
+                        <Input placeholder='Search room'
+                            value={serachKey}
+                            onChange={onInputChange}
+                            className='room-search-box'
+                            onKeyUp={filterByKey}
+                        />
+                    </Space>
+                    <Space direction="vertical" size={12} className='room-type-select-box'>
+                        <Select
+                            value={roomType}
+                            onChange={handleSelectChange}
+                            className='room-type-select'
+                            options={[
+                                {
+                                    value: 'All',
+                                    label: 'All',
+                                },
+                                {
+                                    value: 'Delux',
+                                    label: 'Delux',
+                                },
+                                {
+                                    value: 'Non Delux',
+                                    label: 'Non Delux',
+                                },
+                            ]}
                         />
                     </Space>
                 </Card.Body>
@@ -104,21 +153,16 @@ const Home = () => {
     }
 
     return (
-        <>
-            {rooms?.length > 0 ?
+        <>{loading ? <Loading /> :
+            <div>
                 <div>
-                    <div>
-                        {renderHeader()}
-                    </div>
-                    {rooms.map(item => (
-                        <Rooms roomData={item} dateRange={dateRange} />
-                    ))}
+                    {renderHeader()}
                 </div>
-                : <>
-                    {loading ? <Loading /> : <Error />}
-                </>
-            }
-
+                {rooms.map(item => (
+                    <Rooms roomData={item} dateRange={dateRange} />
+                ))}
+            </div>
+        }
         </>
     )
 }

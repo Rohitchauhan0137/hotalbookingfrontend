@@ -31,6 +31,7 @@ const Login = () => {
           dispatch(userProfile(result))
           toast.success('Login successfully', { duration: 2000 })
           localStorage.setItem('userName', JSON.stringify(result.name))
+          localStorage.setItem('userEmail', JSON.stringify(result.email))
           localStorage.setItem('userId', JSON.stringify(result.userId))
           localStorage.setItem('isAdmin', JSON.stringify(result.isAdmin))
           navigate('/home')

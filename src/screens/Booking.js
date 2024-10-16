@@ -9,7 +9,6 @@ import moment from 'moment';
 import toast, { Toaster } from 'react-hot-toast';
 import StripeCheckout from 'react-stripe-checkout';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import './Booking.css'
@@ -35,6 +34,12 @@ const Booking = () => {
         const splitDate = date.split('-')
         return moment(new Date(`'${splitDate[2]}-${splitDate[1]}-${splitDate[0]}'`)).toDate();
     }
+
+    useEffect(() => {
+        if(!userName){
+            window.location.href = '/login'
+        }
+    }, [userName])
 
     useEffect(() => {
         const bookingFrom = moment(getFormatedDate(params.fromDate), 'DD-MM-YYY')
@@ -112,7 +117,9 @@ const Booking = () => {
                     title: "Congratulations",
                     text: "Your room has been booked successfully",
                     icon: "success"
-                  });
+                  }).then(res => {
+                    window.location.href = '/profile'
+                  })
             }
         } catch (error) {
             setLoading(false)

@@ -15,6 +15,7 @@ const Navbar = () => {
         localStorage.removeItem('userName')
         localStorage.removeItem('isAdmin')
         localStorage.removeItem('userId')
+        localStorage.removeItem('userEmail')
         window.location.href = '/login'
         setUserName('')
         dispatch(userProfile(null))
@@ -24,7 +25,7 @@ const Navbar = () => {
         <div>
             <nav className="navbar navbar-expand-lg">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">THE ROYAL RETREAT</a>
+                    <a className="navbar-brand" href="/home">THE ROYAL RETREAT</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon">
                             <RxHamburgerMenu />
@@ -38,7 +39,7 @@ const Navbar = () => {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">Bookings</Dropdown.Item>
+                                    <Dropdown.Item href="/profile">Profile</Dropdown.Item>
                                     <Dropdown.Item href="#/action-2" onClick={onLogout}>Logout</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
