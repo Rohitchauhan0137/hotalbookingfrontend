@@ -1,0 +1,25 @@
+.landing-page-container {
+    background-image: url('https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg');
+    height: calc(100vh - 60px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.landing-page-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.landing-page-header1, .landing-page-header2 {
+    color: white;
+    font-weight: 600;
+    font-size: 64px;
+}
+
+.landing-page-header2 {
+    font-size: 32px;
+}

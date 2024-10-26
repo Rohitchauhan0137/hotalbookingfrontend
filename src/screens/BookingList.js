@@ -17,7 +17,7 @@ const BookingList = ({ bookingList, cancelBooking }) => {
             {loading && <Loading />}
             {bookingList.length > 0 ? <>
                 {bookingList.map(booking =>
-                    <Card className='booking-list-card'>
+                    <Card className='booking-list-card' data-aos="zoom-in" data-aos-offset="200" data-aos-delay="50">
                         <Card.Body className='booking-list-body'>
                             <h3>{booking.roomName}</h3>
                             <p className='booking-items'><b>Booking ID: </b> {booking._id}</p>

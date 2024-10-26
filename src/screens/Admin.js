@@ -1,47 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tabs } from 'antd';
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 import Loading from '../components/Loading';
 import './Admin.css';
 import { bookingColumns, roomsColumns, usersColumns } from './TableColumns';
 import CreateRoom from './CreateRoom';
 
+const reqData = {
+    name: '',
+    maxCount: '',
+    phoneNumber: '',
+    rentPerDay: '',
+    imageUrls: ['', '', ''],
+    rating: '',
+    type: '',
+    description: ''
+}
+
 const Admin = () => {
     const [currentTab, setCurrentTab] = useState('bookings')
     const [allBookings, setAllBookings] = useState([]);
     const [loading, setLoading] = useState(false)
-    const { allRooms } = useSelector((state) => state.roomList)
     const [roomList, setRoomList] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
-    const [roomReqData, setRoomReqData] = useState({
-        name: '',
-        maxCount: '',
-        phoneNumber: '',
-        rentPerDay: '',
-        imageUrls: ['', '', ''],
-        rating: '',
-        type: '',
-        description: ''
-    })
+    const [roomReqData, setRoomReqData] = useState({ ...reqData })
 
-    const onInputChange = (value, name, isImage=false) => {
-        console.log("Vanue=====>", value, name, isImage)
-    } 
-
-    const onRoomCreate = async () => {
-        console.log("roomReqData=====>", roomReqData)
-        try {
-            
-        } catch (error) {
-            
+    const onInputChange = (value, name) => {
+        let reqData = { ...roomReqData }
+        if (name === "firstImgUrl") {
+            reqData.imageUrls[0] = value;
+        } else if (name === "secondImgUrl") {
+            reqData.imageUrls[1] = value;
+        } else if (name === "thirdImgUrl") {
+            reqData.imageUrls[2] = value;
+        } else {
+            reqData = { ...roomReqData, [name]: value }
         }
+        setRoomReqData({ ...reqData })
     }
 
-    const onChange = (key) => {
-        setCurrentTab(key)
-        console.log(key);
-    };
+    const onRoomCreate = async (values) => {
+        try {
+            if (values) {
+                const newRoom = (await axios.post('/api/rooms/createRoom', roomReqData)).data;
+                Swal.fire({
+                    title: "Congratulations",
+                    text: "Your room has been created successfully",
+                    icon: "success"
+                }).then(() => {
+                    setRoomReqData({ ...reqData })
+                })
+            }
+        } catch (error) {
+            toast.error('OOPS, Something went wrong', { duration: 2000 })
+        }
+    }
 
     useEffect(() => {
         if (!JSON.parse(localStorage.getItem('isAdmin'))) {
@@ -62,18 +77,14 @@ const Admin = () => {
     }
 
     const getAllRooms = async () => {
-        if (allRooms?.length) {
-            setRoomList([...allRooms])
-        } else {
-            try {
-                setLoading(true)
-                const data = (await axios.get('/api/rooms/getAllRooms')).data
-                setRoomList([...data])
-                setLoading(false)
-            } catch (error) {
-                console.log("Error", error);
-                setLoading(false)
-            }
+        try {
+            setLoading(true)
+            const data = (await axios.get('/api/rooms/getAllRooms')).data
+            setRoomList([...data])
+            setLoading(false)
+        } catch (error) {
+            console.log("Error", error);
+            setLoading(false)
         }
     }
 
@@ -89,10 +100,19 @@ const Admin = () => {
         }
     }
 
+    const onChange = (key) => {
+        setCurrentTab(key)
+        if (key === 'bookings') {
+            getAllBookings()
+        } else if (key === 'rooms') {
+            getAllRooms()
+        } else if (key === 'users') {
+            getAllUsers()
+        }
+    };
+
     useEffect(() => {
         getAllBookings();
-        getAllRooms();
-        getAllUsers();
     }, []);
 
     const renderAllBookings = () => {
@@ -136,7 +156,12 @@ const Admin = () => {
         {
             key: 'addRoom',
             label: 'Add Room',
-            children: <CreateRoom roomReqData={roomReqData} onInputChange={onInputChange}/>,
+            children: <CreateRoom
+                roomReqData={roomReqData}
+                onInputChange={onInputChange}
+                setRoomReqData={setRoomReqData}
+                onRoomCreate={onRoomCreate}
+            />,
         },
         {
             key: 'users',
@@ -149,6 +174,7 @@ const Admin = () => {
         <div className='admin-container'>
             <h1 className='admin-panel-header'>Admin panel</h1>
             <Tabs defaultActiveKey={currentTab} items={tabItems} onChange={onChange} />
+            <Toaster />
         </div>
     )
 }
